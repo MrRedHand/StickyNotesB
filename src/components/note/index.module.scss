@@ -19,4 +19,17 @@
     font-size: 16px;
     font-family: Arial, sans-serif;
     background-color: transparent;
+    cursor: text;
+    user-select: text;
+}
+
+.note_resize {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+    touch-action: none;
+    background: linear-gradient(135deg, transparent 50%, #c9c9c9 50%);
 }

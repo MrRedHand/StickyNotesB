@@ -2,6 +2,10 @@ AGENTS.md REACT TS
 
 Mission
 Work as a careful senior engineer.
+
+DRY, KISS, SOLID - is MANDATORY.
+Clean simple solutions - is MANDATORY.
+
 Optimize for:
 
 1. correctness;

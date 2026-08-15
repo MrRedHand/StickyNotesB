@@ -1,8 +1,11 @@
 import { memo } from 'react'
 import styles from './index.module.scss'
 import { useNoteInteractions } from '../../hooks/use-note-interactions'
+import { useDebouncedCallback } from '../../hooks/use-local-storage'
+import { useNotesDispatch } from '../../hooks/use-notes'
 
 export interface INoteState {
+  id: string
   positionX: number
   positionY: number
   width: number
@@ -12,19 +15,30 @@ export interface INoteState {
 }
 
 function Note(props: INoteState) {
+  const dispatch = useNotesDispatch()
   const {
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
     handlePointerCancel,
   } = useNoteInteractions({
-    x: props.positionX,
-    y: props.positionY,
-    onMove: (x: number, y: number) => {
-      props.positionX = x
-      props.positionY = y
+    positionX: props.positionX,
+    positionY: props.positionY,
+    width: props.width,
+    height: props.height,
+    zIndex: props.zIndex,
+    onCommit: (patch) => {
+      dispatch({ type: 'commit', id: props.id, patch })
+    },
+    onRemove: () => {
+      dispatch({ type: 'remove', id: props.id })
     },
   })
+
+  const commitText = useDebouncedCallback((text: string) => {
+    dispatch({ type: 'updateText', id: props.id, text })
+  })
+
   return (
     <div
       className={styles.note}
@@ -43,8 +57,14 @@ function Note(props: INoteState) {
       <textarea
         className={styles.note_textarea}
         placeholder="Enter your note here"
-        value={props.text}
+        defaultValue={props.text}
+        onPointerDown={(event) => {
+          event.stopPropagation()
+          dispatch({ type: 'bringToFront', id: props.id })
+        }}
+        onChange={(event) => commitText(event.target.value)}
       />
+      <div className={styles.note_resize} data-resize />
     </div>
   )
 }
