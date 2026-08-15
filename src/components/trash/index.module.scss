@@ -1,0 +1,33 @@
+.trash {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 112px;
+    height: 112px;
+    border: 2px dashed #c9c9c9;
+    border-radius: 16px;
+    background-color: rgb(255 255 255 / 88%);
+    color: #6b6b6b;
+    pointer-events: none;
+    transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+        
+        &[data-hot] {
+            border-color: #e57373;
+            background-color: rgb(255 205 210 / 72%);
+            color: #c62828;
+        }
+        
+        &_icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+}
