@@ -23,15 +23,11 @@ export function readLocalStorage<T>(
 
 export function useLocalStorage<T>(key: string, value: T) {
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      try {
-        localStorage.setItem(key, JSON.stringify(value))
-      } catch (error) {
-        console.error(error)
-      }
-    }, STORAGE_DEBOUNCE_MS)
-
-    return () => window.clearTimeout(timer)
+    try {
+      localStorage.setItem(key, JSON.stringify(value))
+    } catch (error) {
+      console.error(error)
+    }
   }, [key, value])
 }
 
